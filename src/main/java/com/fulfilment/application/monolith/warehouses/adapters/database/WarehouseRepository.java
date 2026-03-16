@@ -37,7 +37,6 @@ public class WarehouseRepository implements WarehouseStore, PanacheRepository<Db
       dbWarehouse.capacity = warehouse.capacity;
       dbWarehouse.stock = warehouse.stock;
       dbWarehouse.archivedAt = warehouse.archivedAt;
-      persist(dbWarehouse);
     }
   }
 

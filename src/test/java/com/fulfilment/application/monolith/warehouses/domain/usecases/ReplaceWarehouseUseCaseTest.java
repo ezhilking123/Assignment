@@ -58,8 +58,6 @@ public class ReplaceWarehouseUseCaseTest {
   /**
    * Basic replace functionality
    */
-
-  /*
   @Test
   @Transactional
   public void testReplaceWarehouseSuccessfully() {
@@ -82,7 +80,7 @@ public class ReplaceWarehouseUseCaseTest {
     assertEquals(30, updated.capacity);
     assertEquals(15, updated.stock);
   }
-*/
+
   /**
    * Cannot replace non-existent warehouse
    */
