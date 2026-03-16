@@ -10,7 +10,6 @@ What are your thoughts on the pros and cons of each approach? Which would you ch
 
 **Answer:**
 ```txt
-
 Pros of API-first (OpenAPI YAML generated code):
 - Single source of truth: Guarantees that the code implementation matches the documented contract.
 - Promotes parallel development: Client/Frontend teams can start building against the specification immediately.
@@ -22,19 +21,14 @@ Cons of API-first:
 
 Pros of Code-first (Direct coding):
 - Faster initial development: No overhead of writing YAML and grappling with code generators.
-- Full access to framework features: Easy to fully leverage annotations.
+- Full access to framework features: Easy to fully leverage Quarkus/JAX-RS annotations.
 
 Cons of Code-first:
 - Documentation drift: API documentation relies on developers keeping annotations updated; it's easy for the code and docs to fall out of sync.
 
 Choice:
-API-first using OpenAPI provides a clear contract, enables parallel development, and ensures strong API governance and documentation. It works very well for microservices and APIs consumed by multiple teams.
-
-Code-first is faster for small internal services because developers can implement endpoints quickly without maintaining a separate specification. However, it can lead to inconsistent APIs and weaker documentation.
-
-In most enterprise systems, I prefer an API-first approach for core services because it improves collaboration, versioning, and long-term maintainability, while code-first can still be useful for small internal endpoints.
- 
- ```
+I would choose the API-first (OpenAPI generation) approach for production systems. It ensures strict adherence to the API contract and provides reliable documentation for consumers. While the initial setup takes more time, it pays off significantly at scale by preventing breaking changes and allowing independent teams to integrate reliably.
+```
 
 ---
 

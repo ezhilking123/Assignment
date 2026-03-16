@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class DbWarehouse {
 
   @Id @GeneratedValue public Long id;
-
+  
   @Version
-  public Long version; // instead of update at
+  public Long version;
 
   @Column(unique = true, nullable = false)
   public String businessUnitCode;

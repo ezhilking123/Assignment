@@ -33,4 +33,68 @@ public class ProductEndpointTest {
         .statusCode(200)
         .body(not(containsString("TONSTAD")), containsString("KALLAX"), containsString("BESTÅ"));
   }
+
+  @Test
+  public void testGetSingleProduct() {
+    given().when().get("/product/2").then().statusCode(200).body("name", containsString("KALLAX"));
+    given().when().get("/product/999").then().statusCode(404);
+  }
+
+  @Test
+  public void testCreateProduct() {
+      Product p = new Product();
+      p.name = "NEW_PRODUCT";
+      p.price = java.math.BigDecimal.valueOf(10.0);
+      p.stock = 5;
+
+      given()
+          .contentType("application/json")
+          .body(p)
+          .when()
+          .post("/product")
+          .then()
+          .statusCode(201)
+          .body("name", containsString("NEW_PRODUCT"));
+
+      p.id = 1L;
+      given()
+          .contentType("application/json")
+          .body(p)
+          .when()
+          .post("/product")
+          .then()
+          .statusCode(422);
+  }
+
+  @Test
+  public void testUpdateProduct() {
+      Product p = new Product();
+      p.name = "UPDATED_NAME";
+      
+      given()
+          .contentType("application/json")
+          .body(p)
+          .when()
+          .put("/product/3")
+          .then()
+          .statusCode(200)
+          .body("name", containsString("UPDATED_NAME"));
+
+      Product pNoName = new Product();
+      given()
+          .contentType("application/json")
+          .body(pNoName)
+          .when()
+          .put("/product/3")
+          .then()
+          .statusCode(422);
+
+      given()
+          .contentType("application/json")
+          .body(p)
+          .when()
+          .put("/product/999")
+          .then()
+          .statusCode(404);
+  }
 }
