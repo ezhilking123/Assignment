@@ -13,8 +13,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.WebApplicationException;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 @RequestScoped
-<span class="fc" id="L17">public class WarehouseResourceImpl implements WarehouseResource {</span>
+<span class="fc" id="L19">public class WarehouseResourceImpl implements WarehouseResource {</span>
+
+<span class="fc" id="L21">  private static final Logger LOG = Logger.getLogger(WarehouseResourceImpl.class);</span>
 
   @Inject private WarehouseRepository warehouseRepository;
   @Inject private CreateWarehouseOperation createWarehouseOperation;
@@ -23,92 +27,93 @@ import java.util.List;
 
   @Override
   public List&lt;Warehouse&gt; listAllWarehousesUnits() {
-<span class="fc" id="L26">    return warehouseRepository.getAll().stream().map(this::toWarehouseResponse).toList();</span>
+<span class="fc" id="L30">    LOG.debug(&quot;REST Request: listAllWarehousesUnits&quot;);</span>
+<span class="fc" id="L31">    return warehouseRepository.getAll().stream().map(this::toWarehouseResponse).toList();</span>
   }
 
   @Override
   @Transactional
   public Warehouse createANewWarehouseUnit(@NotNull Warehouse data) {
     // Convert API model to domain model
-<span class="fc" id="L33">    var domainWarehouse = new com.fulfilment.application.monolith.warehouses.domain.models.Warehouse();</span>
-<span class="fc" id="L34">    domainWarehouse.businessUnitCode = data.getBusinessUnitCode();</span>
-<span class="fc" id="L35">    domainWarehouse.location = data.getLocation();</span>
-<span class="fc" id="L36">    domainWarehouse.capacity = data.getCapacity();</span>
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">    domainWarehouse.stock = data.getStock() != null ? data.getStock() : 0;</span>
+<span class="fc" id="L38">    var domainWarehouse = new com.fulfilment.application.monolith.warehouses.domain.models.Warehouse();</span>
+<span class="fc" id="L39">    domainWarehouse.businessUnitCode = data.getBusinessUnitCode();</span>
+<span class="fc" id="L40">    domainWarehouse.location = data.getLocation();</span>
+<span class="fc" id="L41">    domainWarehouse.capacity = data.getCapacity();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">    domainWarehouse.stock = data.getStock() != null ? data.getStock() : 0;</span>
 
     try {
       // Create warehouse through use case (includes validations)
-<span class="fc" id="L41">      createWarehouseOperation.create(domainWarehouse);</span>
+<span class="fc" id="L46">      createWarehouseOperation.create(domainWarehouse);</span>
       
       // Return the created warehouse
-<span class="fc" id="L44">      return toWarehouseResponse(domainWarehouse);</span>
-<span class="fc" id="L45">    } catch (IllegalArgumentException e) {</span>
-<span class="fc" id="L46">      throw new WebApplicationException(e.getMessage(), 400);</span>
+<span class="fc" id="L49">      return toWarehouseResponse(domainWarehouse);</span>
+<span class="fc" id="L50">    } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L51">      throw new WebApplicationException(e.getMessage(), 400);</span>
     }
   }
 
   @Override
   public Warehouse getAWarehouseUnitByID(String id) {
     // Find warehouse by business unit code
-<span class="fc" id="L53">    var domainWarehouse = warehouseRepository.findByBusinessUnitCode(id);</span>
+<span class="fc" id="L58">    var domainWarehouse = warehouseRepository.findByBusinessUnitCode(id);</span>
     
-<span class="fc bfc" id="L55" title="All 2 branches covered.">    if (domainWarehouse == null) {</span>
-<span class="fc" id="L56">      throw new WebApplicationException(&quot;Warehouse with business unit code '&quot; + id + &quot;' not found&quot;, 404);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">    if (domainWarehouse == null) {</span>
+<span class="fc" id="L61">      throw new WebApplicationException(&quot;Warehouse with business unit code '&quot; + id + &quot;' not found&quot;, 404);</span>
     }
     
-<span class="fc" id="L59">    return toWarehouseResponse(domainWarehouse);</span>
+<span class="fc" id="L64">    return toWarehouseResponse(domainWarehouse);</span>
   }
 
   @Override
   @Transactional
   public void archiveAWarehouseUnitByID(String id) {
     // Find warehouse by business unit code
-<span class="fc" id="L66">    var domainWarehouse = warehouseRepository.findByBusinessUnitCode(id);</span>
+<span class="fc" id="L71">    var domainWarehouse = warehouseRepository.findByBusinessUnitCode(id);</span>
 
-<span class="fc bfc" id="L68" title="All 2 branches covered.">    if (domainWarehouse == null) {</span>
-<span class="fc" id="L69">      throw new WebApplicationException(&quot;Warehouse with business unit code '&quot; + id + &quot;' not found&quot;, 404);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">    if (domainWarehouse == null) {</span>
+<span class="fc" id="L74">      throw new WebApplicationException(&quot;Warehouse with business unit code '&quot; + id + &quot;' not found&quot;, 404);</span>
     }
 
     try {
       // Archive warehouse through use case (includes validations)
-<span class="fc" id="L74">      archiveWarehouseOperation.archive(domainWarehouse);</span>
-<span class="nc" id="L75">    } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L76">      throw new WebApplicationException(e.getMessage(), 400);</span>
-<span class="fc" id="L77">    }</span>
-<span class="fc" id="L78">  }</span>
+<span class="fc" id="L79">      archiveWarehouseOperation.archive(domainWarehouse);</span>
+<span class="nc" id="L80">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L81">      throw new WebApplicationException(e.getMessage(), 400);</span>
+<span class="fc" id="L82">    }</span>
+<span class="fc" id="L83">  }</span>
 
   @Override
   @Transactional
   public Warehouse replaceTheCurrentActiveWarehouse(
       String businessUnitCode, @NotNull Warehouse data) {
     // Convert API model to domain model
-<span class="fc" id="L85">    var domainWarehouse = new com.fulfilment.application.monolith.warehouses.domain.models.Warehouse();</span>
-<span class="fc" id="L86">    domainWarehouse.businessUnitCode = businessUnitCode; // Use businessUnitCode from path</span>
-<span class="fc" id="L87">    domainWarehouse.location = data.getLocation();</span>
-<span class="fc" id="L88">    domainWarehouse.capacity = data.getCapacity();</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">    domainWarehouse.stock = data.getStock() != null ? data.getStock() : 0;</span>
+<span class="fc" id="L90">    var domainWarehouse = new com.fulfilment.application.monolith.warehouses.domain.models.Warehouse();</span>
+<span class="fc" id="L91">    domainWarehouse.businessUnitCode = businessUnitCode; // Use businessUnitCode from path</span>
+<span class="fc" id="L92">    domainWarehouse.location = data.getLocation();</span>
+<span class="fc" id="L93">    domainWarehouse.capacity = data.getCapacity();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">    domainWarehouse.stock = data.getStock() != null ? data.getStock() : 0;</span>
 
     try {
       // Replace warehouse through use case (includes validations)
-<span class="fc" id="L93">      replaceWarehouseOperation.replace(domainWarehouse);</span>
+<span class="fc" id="L98">      replaceWarehouseOperation.replace(domainWarehouse);</span>
 
       // Return the updated warehouse
-<span class="fc" id="L96">      var updated = warehouseRepository.findByBusinessUnitCode(businessUnitCode);</span>
-<span class="fc" id="L97">      return toWarehouseResponse(updated);</span>
-<span class="fc" id="L98">    } catch (IllegalArgumentException e) {</span>
-<span class="fc" id="L99">      throw new WebApplicationException(e.getMessage(), 400);</span>
+<span class="fc" id="L101">      var updated = warehouseRepository.findByBusinessUnitCode(businessUnitCode);</span>
+<span class="fc" id="L102">      return toWarehouseResponse(updated);</span>
+<span class="fc" id="L103">    } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L104">      throw new WebApplicationException(e.getMessage(), 400);</span>
     }
   }
 
   private Warehouse toWarehouseResponse(
       com.fulfilment.application.monolith.warehouses.domain.models.Warehouse warehouse) {
-<span class="fc" id="L105">    var response = new Warehouse();</span>
-<span class="fc" id="L106">    response.setBusinessUnitCode(warehouse.businessUnitCode);</span>
-<span class="fc" id="L107">    response.setLocation(warehouse.location);</span>
-<span class="fc" id="L108">    response.setCapacity(warehouse.capacity);</span>
-<span class="fc" id="L109">    response.setStock(warehouse.stock);</span>
+<span class="fc" id="L110">    var response = new Warehouse();</span>
+<span class="fc" id="L111">    response.setBusinessUnitCode(warehouse.businessUnitCode);</span>
+<span class="fc" id="L112">    response.setLocation(warehouse.location);</span>
+<span class="fc" id="L113">    response.setCapacity(warehouse.capacity);</span>
+<span class="fc" id="L114">    response.setStock(warehouse.stock);</span>
 
-<span class="fc" id="L111">    return response;</span>
+<span class="fc" id="L116">    return response;</span>
   }
 
   @Override
@@ -120,8 +125,8 @@ import java.util.List;
       String sortOrder,
       Integer page,
       Integer pageSize) {
-<span class="nc" id="L123">    var domainWarehouses = warehouseRepository.search(location, minCapacity, maxCapacity, sortBy, sortOrder, page, pageSize);</span>
-<span class="nc" id="L124">    return domainWarehouses.stream().map(this::toWarehouseResponse).toList();</span>
+<span class="nc" id="L128">    var domainWarehouses = warehouseRepository.search(location, minCapacity, maxCapacity, sortBy, sortOrder, page, pageSize);</span>
+<span class="nc" id="L129">    return domainWarehouses.stream().map(this::toWarehouseResponse).toList();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

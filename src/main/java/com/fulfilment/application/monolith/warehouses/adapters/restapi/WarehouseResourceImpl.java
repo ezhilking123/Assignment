@@ -13,8 +13,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.WebApplicationException;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 @RequestScoped
 public class WarehouseResourceImpl implements WarehouseResource {
+
+  private static final Logger LOG = Logger.getLogger(WarehouseResourceImpl.class);
 
   @Inject private WarehouseRepository warehouseRepository;
   @Inject private CreateWarehouseOperation createWarehouseOperation;
@@ -23,6 +27,7 @@ public class WarehouseResourceImpl implements WarehouseResource {
 
   @Override
   public List<Warehouse> listAllWarehousesUnits() {
+    LOG.debug("REST Request: listAllWarehousesUnits");
     return warehouseRepository.getAll().stream().map(this::toWarehouseResponse).toList();
   }
 
