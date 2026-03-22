@@ -7,12 +7,13 @@ import com.fulfilment.application.monolith.warehouses.domain.ports.ReplaceWareho
 import com.fulfilment.application.monolith.warehouses.domain.ports.WarehouseStore;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class ReplaceWarehouseUseCase implements ReplaceWarehouseOperation {
 
-  private static final Logger LOG = Logger.getLogger(ReplaceWarehouseUseCase.class);
+  private static final Logger log = LoggerFactory.getLogger(ReplaceWarehouseUseCase.class);
 
   private final WarehouseStore warehouseStore;
   private final LocationResolver locationResolver;
@@ -24,7 +25,7 @@ public class ReplaceWarehouseUseCase implements ReplaceWarehouseOperation {
 
   @Override
   public void replace(Warehouse newWarehouse) {
-    LOG.infov("Initiating ReplaceWarehouseUseCase for Business Unit Code: {0} with Location: {1}", newWarehouse.businessUnitCode, newWarehouse.location);
+    log.info("Initiating ReplaceWarehouseUseCase for Business Unit Code: {} with Location: {}", newWarehouse.businessUnitCode, newWarehouse.location);
     // Validation 1: Warehouse must exist
     Warehouse existing = warehouseStore.findByBusinessUnitCode(newWarehouse.businessUnitCode);
     if (existing == null) {

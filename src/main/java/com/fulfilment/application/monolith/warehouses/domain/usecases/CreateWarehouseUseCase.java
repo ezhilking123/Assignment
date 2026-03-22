@@ -8,13 +8,14 @@ import com.fulfilment.application.monolith.warehouses.domain.ports.WarehouseStor
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 @Transactional
 public class CreateWarehouseUseCase implements CreateWarehouseOperation {
 
-  private static final Logger LOG = Logger.getLogger(CreateWarehouseUseCase.class);
+  private static final Logger log = LoggerFactory.getLogger(CreateWarehouseUseCase.class);
 
   private final WarehouseStore warehouseStore;
   private final LocationResolver locationResolver;
@@ -26,7 +27,7 @@ public class CreateWarehouseUseCase implements CreateWarehouseOperation {
 
   @Override
   public void create(Warehouse warehouse) {
-    LOG.infov("Initiating CreateWarehouseUseCase for Business Unit Code: {0}", warehouse.businessUnitCode);
+    log.info("Initiating CreateWarehouseUseCase for Business Unit Code: {}", warehouse.businessUnitCode);
     // Validation 1: Business unit code must be unique
     Warehouse existing = warehouseStore.findByBusinessUnitCode(warehouse.businessUnitCode);
     if (existing != null) {
