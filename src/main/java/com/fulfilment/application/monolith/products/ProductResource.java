@@ -26,7 +26,12 @@ import org.jboss.logging.Logger;
 @Consumes("application/json")
 public class ProductResource {
 
-  @Inject ProductRepository productRepository;
+  private final ProductRepository productRepository;
+
+  @Inject
+  public ProductResource(ProductRepository productRepository) {
+    this.productRepository = productRepository;
+  }
 
   private static final Logger LOGGER = Logger.getLogger(ProductResource.class.getName());
 

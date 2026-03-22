@@ -1,10 +1,10 @@
 package com.fulfilment.application.monolith.warehouses.domain.usecases;
 
 import com.fulfilment.application.monolith.location.LocationGateway;
-import com.fulfilment.application.monolith.warehouses.adapters.database.DbWarehouse;
+
 import com.fulfilment.application.monolith.warehouses.adapters.database.WarehouseRepository;
 import com.fulfilment.application.monolith.warehouses.domain.models.Warehouse;
-import com.fulfilment.application.monolith.warehouses.domain.ports.LocationResolver;
+
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -62,7 +62,7 @@ public class ReplaceWarehouseUseCaseTest {
   @Transactional
   public void testReplaceWarehouseSuccessfully() {
     // Create a warehouse
-    Warehouse warehouse = createWarehouse("REPLACE-TEST-001", "AMSTERDAM-001", 80, 40);
+    createWarehouse("REPLACE-TEST-001", "AMSTERDAM-001", 80, 40);
 
     // Replace it with new values
     Warehouse replacement = new Warehouse();

@@ -4,7 +4,7 @@ import com.fulfilment.application.monolith.location.LocationGateway;
 import com.fulfilment.application.monolith.warehouses.adapters.database.DbWarehouse;
 import com.fulfilment.application.monolith.warehouses.adapters.database.WarehouseRepository;
 import com.fulfilment.application.monolith.warehouses.domain.models.Warehouse;
-import com.fulfilment.application.monolith.warehouses.domain.ports.LocationResolver;
+
 import com.fulfilment.application.monolith.warehouses.domain.usecases.CreateWarehouseUseCase;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;

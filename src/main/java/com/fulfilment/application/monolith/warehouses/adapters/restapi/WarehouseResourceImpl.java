@@ -21,10 +21,21 @@ public class WarehouseResourceImpl implements WarehouseResource {
 
   private static final Logger log = LoggerFactory.getLogger(WarehouseResourceImpl.class);
 
-  @Inject private WarehouseRepository warehouseRepository;
-  @Inject private CreateWarehouseOperation createWarehouseOperation;
-  @Inject private ArchiveWarehouseOperation archiveWarehouseOperation;
-  @Inject private ReplaceWarehouseOperation replaceWarehouseOperation;
+  private final WarehouseRepository warehouseRepository;
+  private final CreateWarehouseOperation createWarehouseOperation;
+  private final ArchiveWarehouseOperation archiveWarehouseOperation;
+  private final ReplaceWarehouseOperation replaceWarehouseOperation;
+
+  @Inject
+  public WarehouseResourceImpl(WarehouseRepository warehouseRepository,
+                               CreateWarehouseOperation createWarehouseOperation,
+                               ArchiveWarehouseOperation archiveWarehouseOperation,
+                               ReplaceWarehouseOperation replaceWarehouseOperation) {
+    this.warehouseRepository = warehouseRepository;
+    this.createWarehouseOperation = createWarehouseOperation;
+    this.archiveWarehouseOperation = archiveWarehouseOperation;
+    this.replaceWarehouseOperation = replaceWarehouseOperation;
+  }
 
   @Override
   public List<Warehouse> listAllWarehousesUnits() {
