@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.319" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.fulfilment.application.monolith.products.ProductResourceErrorMapperTest" time="0.22" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -80,35 +80,22 @@
     <property name="jacoco-agent.destfile" value="C:\Ezhil\pushCode\1043-e2\Assignment\target\jacoco-quarkus.exec"/>
     <property name="mp.openapi.extensions.smallrye.defaultConsumes" value="application/json"/>
   </properties>
-  <testcase name="testDeleteStore" classname="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.03">
+  <testcase name="testDeleteNonExistentProduct" classname="com.fulfilment.application.monolith.products.ProductResourceErrorMapperTest" time="0.037">
     <system-out><![CDATA[&amp#27;[35m[Hibernate]&amp#27;[0m 
     &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
+        p1_0.id,
+        p1_0.description,
+        p1_0.name,
+        p1_0.price,
+        p1_0.stock 
     &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
+        Product p1_0 
     &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mdelete&amp#27;[0m 
-    &amp#27;[34mfrom&amp#27;[0m
-        Store 
-    &amp#27;[34mwhere&amp#27;[0m
-        id=?
-&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
-    &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
-    &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-2026-03-22 22:35:31,883 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Store with id of 999 does not exist.
-	at com.fulfilment.application.monolith.stores.StoreResource.delete(StoreResource.java:126)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.delete$$superforward(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass$$function$$4.apply(Unknown Source)
+        p1_0.id=?
+2026-03-22 22:35:31,654 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Product with id of 999999 does not exist.
+	at com.fulfilment.application.monolith.products.ProductResource.delete(ProductResource.java:94)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.delete$$superforward(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass$$function$$3.apply(Unknown Source)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
 	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
@@ -120,9 +107,9 @@
 	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
 	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.delete(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.delete(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$delete_51d77e39c8d2bf28511a9aae7f6a80b42eb0edb7.invoke(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.delete(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_ClientProxy.delete(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource$quarkusrestinvoker$delete_51d77e39c8d2bf28511a9aae7f6a80b42eb0edb7.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -137,86 +124,22 @@
 
 ]]></system-out>
   </testcase>
-  <testcase name="testUpdateStore" classname="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.098">
+  <testcase name="testGetNonExistentProduct" classname="com.fulfilment.application.monolith.products.ProductResourceErrorMapperTest" time="0.064">
     <system-out><![CDATA[&amp#27;[35m[Hibernate]&amp#27;[0m 
     &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
+        p1_0.id,
+        p1_0.description,
+        p1_0.name,
+        p1_0.price,
+        p1_0.stock 
     &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
+        Product p1_0 
     &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mupdate&amp#27;[0m
-        Store 
-    &amp#27;[34mset&amp#27;[0m
-        name=?,
-        quantityProductsInStock=? 
-    &amp#27;[34mwhere&amp#27;[0m
-        id=?
-2026-03-22 22:35:31,931 INFO  [com.ful.app.mon.sto.StoreEventObserver] (executor-thread-1) Store updated event received, syncing with legacy system: 3
-Temporary file created at: C:\Users\ezhil\AppData\Local\Temp\UPDATED_STORE8547449214891606870.txt
-Data written to temporary file.
-Data read from temporary file: Store created. [ name =UPDATED_STORE ] [ items on stock =100]
-Temporary file deleted.
-2026-03-22 22:35:31,968 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Store Name was not set on request.
-	at com.fulfilment.application.monolith.stores.StoreResource.update(StoreResource.java:76)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.update$$superforward(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass$$function$$2.apply(Unknown Source)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.update(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.update(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$update_a7a2c27989401c10b7e2a031bc89af3f08a11c09.invoke(Unknown Source)
-	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
-	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
-	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
-	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:635)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2516)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2495)
-	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1521)
-	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:11)
-	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:11)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-
-&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
-    &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
-    &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-2026-03-22 22:35:31,981 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Store with id of 999 does not exist.
-	at com.fulfilment.application.monolith.stores.StoreResource.update(StoreResource.java:82)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.update$$superforward(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass$$function$$2.apply(Unknown Source)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.update(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.update(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$update_a7a2c27989401c10b7e2a031bc89af3f08a11c09.invoke(Unknown Source)
+        p1_0.id=?
+2026-03-22 22:35:31,688 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Product with id of 999999 does not exist.
+	at com.fulfilment.application.monolith.products.ProductResource.getSingle(ProductResource.java:48)
+	at com.fulfilment.application.monolith.products.ProductResource_ClientProxy.getSingle(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource$quarkusrestinvoker$getSingle_ec618cef32d929587a08c6e3a5954c18c727dc3f.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -231,26 +154,11 @@ Temporary file deleted.
 
 ]]></system-out>
   </testcase>
-  <testcase name="testCreateStore" classname="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.055">
-    <system-out><![CDATA[&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mselect&amp#27;[0m
-        &amp#27;[34mnext&amp#27;[0m &amp#27;[34mvalue&amp#27;[0m &amp#27;[34mfor&amp#27;[0m Store_SEQ
-&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34minsert&amp#27;[0m 
-    &amp#27;[34minto&amp#27;[0m
-        Store
-        (name, quantityProductsInStock, id) 
-    &amp#27;[34mvalues&amp#27;[0m
-        (?, ?, ?)
-2026-03-22 22:35:32,004 INFO  [com.ful.app.mon.sto.StoreEventObserver] (executor-thread-1) Store created event received, syncing with legacy system: 4
-Temporary file created at: C:\Users\ezhil\AppData\Local\Temp\NEW_STORE16164865291644706241.txt
-Data written to temporary file.
-Data read from temporary file: Store created. [ name =NEW_STORE ] [ items on stock =50]
-Temporary file deleted.
-2026-03-22 22:35:32,037 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Id was invalidly set on request.
-	at com.fulfilment.application.monolith.stores.StoreResource.create(StoreResource.java:62)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.create$$superforward(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass$$function$$3.apply(Unknown Source)
+  <testcase name="testUpdateWithNullNameShouldFail" classname="com.fulfilment.application.monolith.products.ProductResourceErrorMapperTest" time="0.036">
+    <system-out><![CDATA[2026-03-22 22:35:31,750 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Product Name was not set on request.
+	at com.fulfilment.application.monolith.products.ProductResource.update(ProductResource.java:69)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.update$$superforward(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass$$function$$1.apply(Unknown Source)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
 	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
@@ -262,9 +170,9 @@ Temporary file deleted.
 	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
 	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.create(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.create(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$create_f3a56c1eccbd1365661f1c3dacd084472e6cb0ef.invoke(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.update(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_ClientProxy.update(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource$quarkusrestinvoker$update_8ec6f4eff76bf111b87626eb862cb146f9dec2cd.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -279,63 +187,22 @@ Temporary file deleted.
 
 ]]></system-out>
   </testcase>
-  <testcase name="testPatchStore" classname="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.085">
+  <testcase name="testUpdateNonExistentProduct" classname="com.fulfilment.application.monolith.products.ProductResourceErrorMapperTest" time="0.042">
     <system-out><![CDATA[&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mupdate&amp#27;[0m
-        Store 
-    &amp#27;[34mset&amp#27;[0m
-        name=?,
-        quantityProductsInStock=? 
-    &amp#27;[34mwhere&amp#27;[0m
-        id=?
-2026-03-22 22:35:32,065 INFO  [com.ful.app.mon.sto.StoreEventObserver] (executor-thread-1) Store updated event received, syncing with legacy system: 3
-Temporary file created at: C:\Users\ezhil\AppData\Local\Temp\PATCHED_STORE1813945415978316898.txt
-Data written to temporary file.
-Data read from temporary file: Store created. [ name =PATCHED_STORE ] [ items on stock =0]
-Temporary file deleted.
-2026-03-22 22:35:32,108 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Store Name was not set on request.
-	at com.fulfilment.application.monolith.stores.StoreResource.patch(StoreResource.java:98)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.patch$$superforward(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass$$function$$1.apply(Unknown Source)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.patch(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.patch(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$patch_8432ad07fefbcd010b0ac7ef8a4b2c575e0c8503.invoke(Unknown Source)
-	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
-	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
-	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
-	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:635)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2516)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2495)
-	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1521)
-	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:11)
-	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:11)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-
-&amp#27;[35m[Hibernate]&amp#27;[0m 
     &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
+        p1_0.id,
+        p1_0.description,
+        p1_0.name,
+        p1_0.price,
+        p1_0.stock 
     &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
+        Product p1_0 
     &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-2026-03-22 22:35:32,126 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Store with id of 999 does not exist.
-	at com.fulfilment.application.monolith.stores.StoreResource.patch(StoreResource.java:104)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.patch$$superforward(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass$$function$$1.apply(Unknown Source)
+        p1_0.id=?
+2026-03-22 22:35:31,792 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Product with id of 999999 does not exist.
+	at com.fulfilment.application.monolith.products.ProductResource.update(ProductResource.java:75)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.update$$superforward(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass$$function$$1.apply(Unknown Source)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
 	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
@@ -347,9 +214,9 @@ Temporary file deleted.
 	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
 	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
 	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at com.fulfilment.application.monolith.stores.StoreResource_Subclass.patch(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.patch(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$patch_8432ad07fefbcd010b0ac7ef8a4b2c575e0c8503.invoke(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.update(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_ClientProxy.update(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource$quarkusrestinvoker$update_8ec6f4eff76bf111b87626eb862cb146f9dec2cd.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -364,29 +231,25 @@ Temporary file deleted.
 
 ]]></system-out>
   </testcase>
-  <testcase name="testGetSingleStore" classname="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.027">
-    <system-out><![CDATA[&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
-    &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
-    &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
-    &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
-    &amp#27;[34mwhere&amp#27;[0m
-        s1_0.id=?
-2026-03-22 22:35:32,156 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Store with id of 999 does not exist.
-	at com.fulfilment.application.monolith.stores.StoreResource.getSingle(StoreResource.java:53)
-	at com.fulfilment.application.monolith.stores.StoreResource_ClientProxy.getSingle(Unknown Source)
-	at com.fulfilment.application.monolith.stores.StoreResource$quarkusrestinvoker$getSingle_0ea403435924cdb47d1c4309397b2b15c27a23a7.invoke(Unknown Source)
+  <testcase name="testCreateWithIdShouldFail" classname="com.fulfilment.application.monolith.products.ProductResourceErrorMapperTest" time="0.032">
+    <system-out><![CDATA[2026-03-22 22:35:31,833 ERROR [com.ful.app.mon.sto.StoreResource] (executor-thread-1) Failed to handle request: jakarta.ws.rs.WebApplicationException: Id was invalidly set on request.
+	at com.fulfilment.application.monolith.products.ProductResource.create(ProductResource.java:57)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.create$$superforward(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass$$function$$2.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at com.fulfilment.application.monolith.products.ProductResource_Subclass.create(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource_ClientProxy.create(Unknown Source)
+	at com.fulfilment.application.monolith.products.ProductResource$quarkusrestinvoker$create_0acc8ceb3daf6749ba14c9206572c0b0ff19b18b.invoke(Unknown Source)
 	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
 	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
 	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
@@ -399,18 +262,6 @@ Temporary file deleted.
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 
-]]></system-out>
-  </testcase>
-  <testcase name="testGetStores" classname="com.fulfilment.application.monolith.stores.StoreEndpointTest" time="0.013">
-    <system-out><![CDATA[&amp#27;[35m[Hibernate]&amp#27;[0m 
-    &amp#27;[34mselect&amp#27;[0m
-        s1_0.id,
-        s1_0.name,
-        s1_0.quantityProductsInStock 
-    &amp#27;[34mfrom&amp#27;[0m
-        Store s1_0 
-    &amp#27;[34morder&amp#27;[0m &amp#27;[34mby&amp#27;[0m
-        s1_0.name
 ]]></system-out>
   </testcase>
 </testsuite>

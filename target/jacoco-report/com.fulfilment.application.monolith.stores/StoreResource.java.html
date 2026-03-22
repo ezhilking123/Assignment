@@ -130,28 +130,28 @@ public class StoreResource {
   }
 
   @Provider
-<span class="nc" id="L133">  public static class ErrorMapper implements ExceptionMapper&lt;Exception&gt; {</span>
+<span class="fc" id="L133">  public static class ErrorMapper implements ExceptionMapper&lt;Exception&gt; {</span>
 
     @Inject ObjectMapper objectMapper;
 
     @Override
     public Response toResponse(Exception exception) {
-<span class="nc" id="L139">      LOGGER.error(&quot;Failed to handle request&quot;, exception);</span>
+<span class="fc" id="L139">      LOGGER.error(&quot;Failed to handle request&quot;, exception);</span>
 
-<span class="nc" id="L141">      int code = 500;</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">      if (exception instanceof WebApplicationException) {</span>
-<span class="nc" id="L143">        code = ((WebApplicationException) exception).getResponse().getStatus();</span>
+<span class="fc" id="L141">      int code = 500;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">      if (exception instanceof WebApplicationException) {</span>
+<span class="fc" id="L143">        code = ((WebApplicationException) exception).getResponse().getStatus();</span>
       }
 
-<span class="nc" id="L146">      ObjectNode exceptionJson = objectMapper.createObjectNode();</span>
-<span class="nc" id="L147">      exceptionJson.put(&quot;exceptionType&quot;, exception.getClass().getName());</span>
-<span class="nc" id="L148">      exceptionJson.put(&quot;code&quot;, code);</span>
+<span class="fc" id="L146">      ObjectNode exceptionJson = objectMapper.createObjectNode();</span>
+<span class="fc" id="L147">      exceptionJson.put(&quot;exceptionType&quot;, exception.getClass().getName());</span>
+<span class="fc" id="L148">      exceptionJson.put(&quot;code&quot;, code);</span>
 
-<span class="nc bnc" id="L150" title="All 2 branches missed.">      if (exception.getMessage() != null) {</span>
-<span class="nc" id="L151">        exceptionJson.put(&quot;error&quot;, exception.getMessage());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">      if (exception.getMessage() != null) {</span>
+<span class="fc" id="L151">        exceptionJson.put(&quot;error&quot;, exception.getMessage());</span>
       }
 
-<span class="nc" id="L154">      return Response.status(code).entity(exceptionJson).build();</span>
+<span class="fc" id="L154">      return Response.status(code).entity(exceptionJson).build();</span>
     }
   }
 }

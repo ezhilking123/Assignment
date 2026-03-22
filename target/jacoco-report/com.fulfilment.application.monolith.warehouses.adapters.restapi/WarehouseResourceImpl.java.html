@@ -28,9 +28,9 @@ public class WarehouseResourceImpl implements WarehouseResource {
 
   @Inject
   public WarehouseResourceImpl(WarehouseRepository warehouseRepository,
-                               CreateWarehouseOperation createWarehouseOperation,
-                               ArchiveWarehouseOperation archiveWarehouseOperation,
-<span class="fc" id="L33">                               ReplaceWarehouseOperation replaceWarehouseOperation) {</span>
+      CreateWarehouseOperation createWarehouseOperation,
+      ArchiveWarehouseOperation archiveWarehouseOperation,
+<span class="fc" id="L33">      ReplaceWarehouseOperation replaceWarehouseOperation) {</span>
 <span class="fc" id="L34">    this.warehouseRepository = warehouseRepository;</span>
 <span class="fc" id="L35">    this.createWarehouseOperation = createWarehouseOperation;</span>
 <span class="fc" id="L36">    this.archiveWarehouseOperation = archiveWarehouseOperation;</span>
@@ -56,7 +56,7 @@ public class WarehouseResourceImpl implements WarehouseResource {
     try {
       // Create warehouse through use case (includes validations)
 <span class="fc" id="L58">      createWarehouseOperation.create(domainWarehouse);</span>
-      
+
       // Return the created warehouse
 <span class="fc" id="L61">      return toWarehouseResponse(domainWarehouse);</span>
 <span class="fc" id="L62">    } catch (IllegalArgumentException e) {</span>
@@ -68,11 +68,11 @@ public class WarehouseResourceImpl implements WarehouseResource {
   public Warehouse getAWarehouseUnitByID(String id) {
     // Find warehouse by business unit code
 <span class="fc" id="L70">    var domainWarehouse = warehouseRepository.findByBusinessUnitCode(id);</span>
-    
+
 <span class="fc bfc" id="L72" title="All 2 branches covered.">    if (domainWarehouse == null) {</span>
 <span class="fc" id="L73">      throw new WebApplicationException(&quot;Warehouse with business unit code '&quot; + id + &quot;' not found&quot;, 404);</span>
     }
-    
+
 <span class="fc" id="L76">    return toWarehouseResponse(domainWarehouse);</span>
   }
 
@@ -137,8 +137,9 @@ public class WarehouseResourceImpl implements WarehouseResource {
       String sortOrder,
       Integer page,
       Integer pageSize) {
-<span class="nc" id="L140">    var domainWarehouses = warehouseRepository.search(location, minCapacity, maxCapacity, sortBy, sortOrder, page, pageSize);</span>
-<span class="nc" id="L141">    return domainWarehouses.stream().map(this::toWarehouseResponse).toList();</span>
+<span class="nc" id="L140">    var domainWarehouses = warehouseRepository.search(location, minCapacity, maxCapacity, sortBy, sortOrder, page,</span>
+        pageSize);
+<span class="nc" id="L142">    return domainWarehouses.stream().map(this::toWarehouseResponse).toList();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -28,9 +28,9 @@ public class WarehouseResourceImpl implements WarehouseResource {
 
   @Inject
   public WarehouseResourceImpl(WarehouseRepository warehouseRepository,
-                               CreateWarehouseOperation createWarehouseOperation,
-                               ArchiveWarehouseOperation archiveWarehouseOperation,
-                               ReplaceWarehouseOperation replaceWarehouseOperation) {
+      CreateWarehouseOperation createWarehouseOperation,
+      ArchiveWarehouseOperation archiveWarehouseOperation,
+      ReplaceWarehouseOperation replaceWarehouseOperation) {
     this.warehouseRepository = warehouseRepository;
     this.createWarehouseOperation = createWarehouseOperation;
     this.archiveWarehouseOperation = archiveWarehouseOperation;
@@ -56,7 +56,7 @@ public class WarehouseResourceImpl implements WarehouseResource {
     try {
       // Create warehouse through use case (includes validations)
       createWarehouseOperation.create(domainWarehouse);
-      
+
       // Return the created warehouse
       return toWarehouseResponse(domainWarehouse);
     } catch (IllegalArgumentException e) {
@@ -68,11 +68,11 @@ public class WarehouseResourceImpl implements WarehouseResource {
   public Warehouse getAWarehouseUnitByID(String id) {
     // Find warehouse by business unit code
     var domainWarehouse = warehouseRepository.findByBusinessUnitCode(id);
-    
+
     if (domainWarehouse == null) {
       throw new WebApplicationException("Warehouse with business unit code '" + id + "' not found", 404);
     }
-    
+
     return toWarehouseResponse(domainWarehouse);
   }
 
@@ -137,7 +137,8 @@ public class WarehouseResourceImpl implements WarehouseResource {
       String sortOrder,
       Integer page,
       Integer pageSize) {
-    var domainWarehouses = warehouseRepository.search(location, minCapacity, maxCapacity, sortBy, sortOrder, page, pageSize);
+    var domainWarehouses = warehouseRepository.search(location, minCapacity, maxCapacity, sortBy, sortOrder, page,
+        pageSize);
     return domainWarehouses.stream().map(this::toWarehouseResponse).toList();
   }
 }
