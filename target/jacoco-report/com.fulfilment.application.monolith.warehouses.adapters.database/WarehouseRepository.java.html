@@ -7,79 +7,90 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 @ApplicationScoped
 @Transactional
-<span class="fc" id="L12">public class WarehouseRepository implements WarehouseStore, PanacheRepository&lt;DbWarehouse&gt; {</span>
+<span class="fc" id="L14">public class WarehouseRepository implements WarehouseStore, PanacheRepository&lt;DbWarehouse&gt; {</span>
+
+<span class="fc" id="L16">  private static final Logger LOG = Logger.getLogger(WarehouseRepository.class);</span>
 
   @Override
   public List&lt;Warehouse&gt; getAll() {
-<span class="fc" id="L16">    return this.listAll().stream().map(DbWarehouse::toWarehouse).toList();</span>
+<span class="fc" id="L20">    LOG.debug(&quot;Fetching all warehouses from database&quot;);</span>
+<span class="fc" id="L21">    return this.listAll().stream().map(DbWarehouse::toWarehouse).toList();</span>
   }
 
   @Override
   public void create(Warehouse warehouse) {
-<span class="fc" id="L21">    DbWarehouse dbWarehouse = new DbWarehouse();</span>
-<span class="fc" id="L22">    dbWarehouse.businessUnitCode = warehouse.businessUnitCode;</span>
-<span class="fc" id="L23">    dbWarehouse.location = warehouse.location;</span>
-<span class="fc" id="L24">    dbWarehouse.capacity = warehouse.capacity;</span>
-<span class="fc" id="L25">    dbWarehouse.stock = warehouse.stock;</span>
-<span class="fc" id="L26">    dbWarehouse.createdAt = warehouse.createdAt;</span>
-<span class="fc" id="L27">    dbWarehouse.archivedAt = warehouse.archivedAt;</span>
+<span class="fc" id="L26">    LOG.infov(&quot;Creating new warehouse in database with Business Unit Code: {0}&quot;, warehouse.businessUnitCode);</span>
+<span class="fc" id="L27">    DbWarehouse dbWarehouse = new DbWarehouse();</span>
+<span class="fc" id="L28">    dbWarehouse.businessUnitCode = warehouse.businessUnitCode;</span>
+<span class="fc" id="L29">    dbWarehouse.location = warehouse.location;</span>
+<span class="fc" id="L30">    dbWarehouse.capacity = warehouse.capacity;</span>
+<span class="fc" id="L31">    dbWarehouse.stock = warehouse.stock;</span>
+<span class="fc" id="L32">    dbWarehouse.createdAt = warehouse.createdAt;</span>
+<span class="fc" id="L33">    dbWarehouse.archivedAt = warehouse.archivedAt;</span>
     
-<span class="fc" id="L29">    this.persist(dbWarehouse);</span>
-<span class="fc" id="L30">  }</span>
+<span class="fc" id="L35">    this.persist(dbWarehouse);</span>
+<span class="fc" id="L36">  }</span>
 
   @Override
   public void update(Warehouse warehouse) {
-<span class="fc" id="L34">    DbWarehouse dbWarehouse = find(&quot;businessUnitCode&quot;, warehouse.businessUnitCode).firstResult();</span>
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    if (dbWarehouse != null) {</span>
-<span class="fc" id="L36">      dbWarehouse.location = warehouse.location;</span>
-<span class="fc" id="L37">      dbWarehouse.capacity = warehouse.capacity;</span>
-<span class="fc" id="L38">      dbWarehouse.stock = warehouse.stock;</span>
-<span class="fc" id="L39">      dbWarehouse.archivedAt = warehouse.archivedAt;</span>
+<span class="fc" id="L40">    LOG.infov(&quot;Updating warehouse in database with Business Unit Code: {0}&quot;, warehouse.businessUnitCode);</span>
+<span class="fc" id="L41">    DbWarehouse dbWarehouse = find(&quot;businessUnitCode&quot;, warehouse.businessUnitCode).firstResult();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">    if (dbWarehouse != null) {</span>
+<span class="fc" id="L43">      dbWarehouse.location = warehouse.location;</span>
+<span class="fc" id="L44">      dbWarehouse.capacity = warehouse.capacity;</span>
+<span class="fc" id="L45">      dbWarehouse.stock = warehouse.stock;</span>
+<span class="fc" id="L46">      dbWarehouse.archivedAt = warehouse.archivedAt;</span>
+    } else {
+<span class="nc" id="L48">      LOG.warnv(&quot;Warehouse not found for update: {0}&quot;, warehouse.businessUnitCode);</span>
     }
-<span class="fc" id="L41">  }</span>
+<span class="fc" id="L50">  }</span>
 
   @Override
   public void remove(Warehouse warehouse) {
-<span class="nc bnc" id="L45" title="All 4 branches missed.">    if (warehouse != null &amp;&amp; warehouse.businessUnitCode != null) {</span>
-<span class="nc" id="L46">      delete(&quot;businessUnitCode&quot;, warehouse.businessUnitCode);</span>
+<span class="nc bnc" id="L54" title="All 4 branches missed.">    if (warehouse != null &amp;&amp; warehouse.businessUnitCode != null) {</span>
+<span class="nc" id="L55">      LOG.infov(&quot;Removing warehouse from database: {0}&quot;, warehouse.businessUnitCode);</span>
+<span class="nc" id="L56">      delete(&quot;businessUnitCode&quot;, warehouse.businessUnitCode);</span>
     }
-<span class="nc" id="L48">  }</span>
+<span class="nc" id="L58">  }</span>
 
   @Override
   public Warehouse findByBusinessUnitCode(String buCode) {
-<span class="fc" id="L52">    DbWarehouse dbWarehouse = find(&quot;businessUnitCode&quot;, buCode).firstResult();</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">    return dbWarehouse != null ? dbWarehouse.toWarehouse() : null;</span>
+<span class="fc" id="L62">    LOG.debugv(&quot;Finding warehouse by Business Unit Code: {0}&quot;, buCode);</span>
+<span class="fc" id="L63">    DbWarehouse dbWarehouse = find(&quot;businessUnitCode&quot;, buCode).firstResult();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">    return dbWarehouse != null ? dbWarehouse.toWarehouse() : null;</span>
   }
 
   @Override
   public List&lt;Warehouse&gt; search(String location, Integer minCapacity, Integer maxCapacity, String sortBy, String sortOrder, Integer page, Integer pageSize) {
-<span class="nc" id="L58">    StringBuilder queryBuilder = new StringBuilder(&quot;archivedAt IS NULL&quot;);</span>
-<span class="nc" id="L59">    java.util.Map&lt;String, Object&gt; params = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L69">    StringBuilder queryBuilder = new StringBuilder(&quot;archivedAt IS NULL&quot;);</span>
+<span class="nc" id="L70">    java.util.Map&lt;String, Object&gt; params = new java.util.HashMap&lt;&gt;();</span>
     
-<span class="nc bnc" id="L61" title="All 4 branches missed.">    if (location != null &amp;&amp; !location.isBlank()) {</span>
-<span class="nc" id="L62">        queryBuilder.append(&quot; AND location = :location&quot;);</span>
-<span class="nc" id="L63">        params.put(&quot;location&quot;, location);</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">    if (location != null &amp;&amp; !location.isBlank()) {</span>
+<span class="nc" id="L73">        queryBuilder.append(&quot; AND location = :location&quot;);</span>
+<span class="nc" id="L74">        params.put(&quot;location&quot;, location);</span>
     }
-<span class="nc bnc" id="L65" title="All 2 branches missed.">    if (minCapacity != null) {</span>
-<span class="nc" id="L66">        queryBuilder.append(&quot; AND capacity &gt;= :minCapacity&quot;);</span>
-<span class="nc" id="L67">        params.put(&quot;minCapacity&quot;, minCapacity);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">    if (minCapacity != null) {</span>
+<span class="nc" id="L77">        queryBuilder.append(&quot; AND capacity &gt;= :minCapacity&quot;);</span>
+<span class="nc" id="L78">        params.put(&quot;minCapacity&quot;, minCapacity);</span>
     }
-<span class="nc bnc" id="L69" title="All 2 branches missed.">    if (maxCapacity != null) {</span>
-<span class="nc" id="L70">        queryBuilder.append(&quot; AND capacity &lt;= :maxCapacity&quot;);</span>
-<span class="nc" id="L71">        params.put(&quot;maxCapacity&quot;, maxCapacity);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">    if (maxCapacity != null) {</span>
+<span class="nc" id="L81">        queryBuilder.append(&quot; AND capacity &lt;= :maxCapacity&quot;);</span>
+<span class="nc" id="L82">        params.put(&quot;maxCapacity&quot;, maxCapacity);</span>
     }
     
-<span class="nc bnc" id="L74" title="All 4 branches missed.">    String sortField = sortBy != null &amp;&amp; sortBy.equals(&quot;capacity&quot;) ? &quot;capacity&quot; : &quot;createdAt&quot;;</span>
-<span class="nc bnc" id="L75" title="All 4 branches missed.">    String order = sortOrder != null &amp;&amp; sortOrder.equalsIgnoreCase(&quot;desc&quot;) ? &quot;Descending&quot; : &quot;Ascending&quot;;</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">    String sortField = sortBy != null &amp;&amp; sortBy.equals(&quot;capacity&quot;) ? &quot;capacity&quot; : &quot;createdAt&quot;;</span>
+<span class="nc bnc" id="L86" title="All 4 branches missed.">    String order = sortOrder != null &amp;&amp; sortOrder.equalsIgnoreCase(&quot;desc&quot;) ? &quot;Descending&quot; : &quot;Ascending&quot;;</span>
     
-<span class="nc" id="L77">    io.quarkus.hibernate.orm.panache.PanacheQuery&lt;DbWarehouse&gt; query = find(queryBuilder.toString(), io.quarkus.panache.common.Sort.by(sortField).direction(io.quarkus.panache.common.Sort.Direction.valueOf(order)), params);</span>
+<span class="nc" id="L88">    io.quarkus.hibernate.orm.panache.PanacheQuery&lt;DbWarehouse&gt; query = find(queryBuilder.toString(), io.quarkus.panache.common.Sort.by(sortField).direction(io.quarkus.panache.common.Sort.Direction.valueOf(order)), params);</span>
     
-<span class="nc bnc" id="L79" title="All 2 branches missed.">    int pageNum = page != null ? page : 0;</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">    int size = pageSize != null ? pageSize : 10;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">    int pageNum = page != null ? page : 0;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    int size = pageSize != null ? pageSize : 10;</span>
     
-<span class="nc" id="L82">    return query.page(pageNum, size).list().stream().map(DbWarehouse::toWarehouse).toList();</span>
+<span class="nc" id="L93">    return query.page(pageNum, size).list().stream().map(DbWarehouse::toWarehouse).toList();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

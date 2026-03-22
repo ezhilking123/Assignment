@@ -7,17 +7,23 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 @ApplicationScoped
 @Transactional
 public class WarehouseRepository implements WarehouseStore, PanacheRepository<DbWarehouse> {
 
+  private static final Logger LOG = Logger.getLogger(WarehouseRepository.class);
+
   @Override
   public List<Warehouse> getAll() {
+    LOG.debug("Fetching all warehouses from database");
     return this.listAll().stream().map(DbWarehouse::toWarehouse).toList();
   }
 
   @Override
   public void create(Warehouse warehouse) {
+    LOG.infov("Creating new warehouse in database with Business Unit Code: {0}", warehouse.businessUnitCode);
     DbWarehouse dbWarehouse = new DbWarehouse();
     dbWarehouse.businessUnitCode = warehouse.businessUnitCode;
     dbWarehouse.location = warehouse.location;
@@ -31,24 +37,29 @@ public class WarehouseRepository implements WarehouseStore, PanacheRepository<Db
 
   @Override
   public void update(Warehouse warehouse) {
+    LOG.infov("Updating warehouse in database with Business Unit Code: {0}", warehouse.businessUnitCode);
     DbWarehouse dbWarehouse = find("businessUnitCode", warehouse.businessUnitCode).firstResult();
     if (dbWarehouse != null) {
       dbWarehouse.location = warehouse.location;
       dbWarehouse.capacity = warehouse.capacity;
       dbWarehouse.stock = warehouse.stock;
       dbWarehouse.archivedAt = warehouse.archivedAt;
+    } else {
+      LOG.warnv("Warehouse not found for update: {0}", warehouse.businessUnitCode);
     }
   }
 
   @Override
   public void remove(Warehouse warehouse) {
     if (warehouse != null && warehouse.businessUnitCode != null) {
+      LOG.infov("Removing warehouse from database: {0}", warehouse.businessUnitCode);
       delete("businessUnitCode", warehouse.businessUnitCode);
     }
   }
 
   @Override
   public Warehouse findByBusinessUnitCode(String buCode) {
+    LOG.debugv("Finding warehouse by Business Unit Code: {0}", buCode);
     DbWarehouse dbWarehouse = find("businessUnitCode", buCode).firstResult();
     return dbWarehouse != null ? dbWarehouse.toWarehouse() : null;
   }
