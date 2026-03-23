@@ -32,8 +32,8 @@ public class StoreResource {
   private final Event<StoreUpdatedEvent> storeUpdatedEvent;
 
   @Inject
-  public StoreResource(Event<StoreCreatedEvent> storeCreatedEvent, 
-                       Event<StoreUpdatedEvent> storeUpdatedEvent) {
+  public StoreResource(Event<StoreCreatedEvent> storeCreatedEvent,
+      Event<StoreUpdatedEvent> storeUpdatedEvent) {
     this.storeCreatedEvent = storeCreatedEvent;
     this.storeUpdatedEvent = storeUpdatedEvent;
   }
@@ -132,7 +132,8 @@ public class StoreResource {
   @Provider
   public static class ErrorMapper implements ExceptionMapper<Exception> {
 
-    @Inject ObjectMapper objectMapper;
+    @Inject
+    ObjectMapper objectMapper;
 
     @Override
     public Response toResponse(Exception exception) {

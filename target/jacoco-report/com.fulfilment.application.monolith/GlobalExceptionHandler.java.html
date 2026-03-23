@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-code-assignment</a> &gt; <a href="index.source.html" class="el_package">com.fulfilment.application.monolith</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.fulfilment.application.monolith;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+/**
+ * Global Exception Handler for the Application using Spring Web compatibility.
+ */
+@RestControllerAdvice
+<span class="nc" id="L18">public class GlobalExceptionHandler {</span>
+
+<span class="nc" id="L20">    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);</span>
+
+    @Inject
+    ObjectMapper objectMapper;
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity&lt;ObjectNode&gt; handleAllExceptions(Exception exception) {
+<span class="nc" id="L27">        LOGGER.error(&quot;Failed to handle request globally via Spring @RestControllerAdvice&quot;, exception);</span>
+
+<span class="nc" id="L29">        int code = 500;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (exception instanceof WebApplicationException webAppEx) {</span>
+<span class="nc" id="L31">            code = webAppEx.getResponse().getStatus();</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        } else if (exception instanceof IllegalArgumentException) {</span>
+<span class="nc" id="L33">            code = 400; // Map standard bad arguments to bad request</span>
+        }
+
+<span class="nc" id="L36">        ObjectNode exceptionJson = objectMapper.createObjectNode();</span>
+<span class="nc" id="L37">        exceptionJson.put(&quot;exceptionType&quot;, exception.getClass().getName());</span>
+<span class="nc" id="L38">        exceptionJson.put(&quot;code&quot;, code);</span>
+
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        if (exception.getMessage() != null &amp;&amp; !exception.getMessage().isBlank()) {</span>
+<span class="nc" id="L41">            exceptionJson.put(&quot;error&quot;, exception.getMessage());</span>
+        }
+
+<span class="nc" id="L44">        return ResponseEntity.status(HttpStatus.valueOf(code)).body(exceptionJson);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,17 @@
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\stores\StoreEndpointTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\adapters\WarehouseSearchIT.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\domain\WarehouseOptimisticLockingTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\products\ProductEndpointTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\adapters\database\WarehouseRepositoryTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\products\ProductResourceErrorMapperTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\location\LocationGatewayTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\adapters\WarehouseTestcontainersIT.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\domain\WarehouseValidationTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\adapters\WarehouseConcurrencyIT.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\domain\usecases\ReplaceWarehouseUseCaseTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\adapters\restapi\WarehouseResourceTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\domain\usecases\ArchiveWarehouseUseCaseTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\stores\StoreEventObserverTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\stores\StoreTransactionIntegrationTest.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\adapters\restapi\WarehouseEndpointIT.java
+C:\Ezhil\pushCode\1043-e2\Assignment\src\test\java\com\fulfilment\application\monolith\warehouses\domain\usecases\CreateWarehouseUseCaseTest.java

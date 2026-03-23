@@ -100,7 +100,8 @@ public class ProductResource {
   @Provider
   public static class ErrorMapper implements ExceptionMapper<Exception> {
 
-    @Inject ObjectMapper objectMapper;
+    @Inject
+    ObjectMapper objectMapper;
 
     @Override
     public Response toResponse(Exception exception) {
